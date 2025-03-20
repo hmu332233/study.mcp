@@ -1,0 +1,5 @@
+{
+  "**/*": "prettier --write --ignore-unknown",
+  "!**/.*": "prettier --write --ignore-unknown",
+  "!(pnpm-lock.yaml|package.json|LICENSE)": "prettier --write --ignore-unknown"
+}
