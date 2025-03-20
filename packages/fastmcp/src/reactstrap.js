@@ -104,6 +104,17 @@ server.addTool({
   },
 });
 
+// 도구: 컴포넌트 목록 검색
+server.addTool({
+  name: 'getComponentList',
+  description: 'Get a list of all Reactstrap components',
+  parameters: z.object({}),
+  async execute() {
+    const componentList = Object.keys(reactstrapDocs);
+    return `Available components: ${componentList.join(', ')}`;
+  },
+});
+
 // FastMCP와 SSE 통합
 server
   .start({
