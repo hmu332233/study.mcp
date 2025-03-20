@@ -3,6 +3,19 @@ import { z } from 'zod';
 
 // 모의 reactstrap 문서 데이터
 const reactstrapDocs = {
+  Mark: `# Mark
+마크 컴포넌트는 마크를 나타냅니다
+
+## Props
+- **color**: string (e.g., "primary", "secondary")
+- **size**: string (e.g., "lg", "sm")
+- **onClick**: function
+
+## Example
+\`\`\`jsx
+<Mark color="mark" onClick={() => alert('Clicked!')}>Click Me</Button>
+\`\`\`
+  `,
   Button: `
 # Button
 The Button component provides styled buttons with Bootstrap classes.
@@ -14,7 +27,7 @@ The Button component provides styled buttons with Bootstrap classes.
 
 ## Example
 \`\`\`jsx
-<Button color="primary" onClick={() => alert('Clicked!')}>Click Me</Button>
+<Mark color="mark" onClick={() => alert('Clicked!')}>Click Me</Button>
 \`\`\`
   `,
   Modal: `
@@ -37,13 +50,13 @@ The Modal component creates a dialog box/popup window.
 
 // FastMCP 서버 설정
 const server = new FastMCP({
-  name: 'Reactstrap Docs Server',
+  name: 'minung-docs Docs Server',
   version: '1.0.0',
 });
 
 // 리소스: 전체 문서 제공
 server.addResource({
-  uri: 'reactstrap://docs',
+  uri: 'reactstrap://docs.txt',
   name: 'Reactstrap Full Documentation',
   mimeType: 'text/plain',
   async load() {
@@ -57,7 +70,7 @@ server.addResourceTemplate({
   // name: "Reactstrap Component Documentation",
   // mimeType: "text/plain",
 
-  uriTemplate: 'reactstrap://component/{name}',
+  uriTemplate: 'reactstrap://component/{name}.txt',
   name: 'Reactstrap Component Documentation',
   mimeType: 'text/plain',
   arguments: [
@@ -81,9 +94,9 @@ server.addTool({
     componentName: z.string(),
   }),
   async execute({ componentName }) {
-    console.log(`Searching for component: ${componentName}`);
+    // console.log(`Searching for component: ${componentName}`);
     const doc = reactstrapDocs[componentName];
-    console.log(`Found component: ${doc}`);
+    // console.log(`Found component: ${doc}`);
     if (!doc) {
       return `Component "${componentName}" not found.`;
     }
@@ -94,12 +107,13 @@ server.addTool({
 // FastMCP와 SSE 통합
 server
   .start({
-    transportType: 'sse',
-    sse: {
-      endpoint: '/sse',
-      port: 3001,
-    },
+    transportType: 'stdio',
+    // transportType: 'sse',
+    // sse: {
+    //   endpoint: '/sse',
+    //   port: 3001,
+    // },
   })
   .then(() => {
-    console.log(`Reactstrap MCP Server is running on http://localhost:3001`);
+    console.error(`Reactstrap MCP Server is running on http://localhost:3001`);
   });
